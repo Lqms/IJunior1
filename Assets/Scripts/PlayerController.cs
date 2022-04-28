@@ -63,9 +63,9 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Enter");
 
-        if (other.GetComponent<AlarmScript>())
+        if (other.GetComponent<AlarmSystem>())
         {
-            other.GetComponent<AlarmScript>().TurnOnAlarm();
+            other.GetComponent<AlarmSystem>().TurnOnAlarm();
         }
     }
 
@@ -73,9 +73,9 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Exit");
 
-        if (other.GetComponent<AlarmScript>())
+        if (other.GetComponent<AlarmSystem>())
         {
-            other.GetComponent<AlarmScript>().TurnOffAlarm();
+            other.GetComponent<AlarmSystem>().TurnOffAlarm();
         }
     }
 }

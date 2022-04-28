@@ -23,13 +23,11 @@ public class OpenDoor : MonoBehaviour
             {
                 if (_isDoorOpen == false)
                 {
-                    Debug.Log("Open");
                     _animator.SetTrigger("Open");
                     _isDoorOpen = true;                   
                 }
                 else
                 {
-                    Debug.Log("Close");
                     _animator.SetTrigger("Close");
                     _isDoorOpen = false;
                 }

@@ -18,7 +18,9 @@ public class MainCameraScript : MonoBehaviour
     private void Update()
     {
         CheckForInteractableObject();
-        CameraMove();
+
+        if (Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") > 0)
+            CameraMove();
     }
 
     private void CameraMove()
@@ -26,8 +28,10 @@ public class MainCameraScript : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * _mouseSpeed * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * _mouseSpeed * Time.deltaTime;
 
+        float minimalRange = -45f;
+        float maximalRange = 45f;
         _rotationY -= mouseY;
-        _rotationY = Mathf.Clamp(_rotationY, -45f, 45f);
+        _rotationY = Mathf.Clamp(_rotationY, minimalRange, maximalRange);
 
         _playerBody.Rotate(Vector3.up * mouseX);
         transform.localRotation = Quaternion.Euler(_rotationY, 0f, 0f);

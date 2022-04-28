@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlarmScript : MonoBehaviour
+public class AlarmSystem : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private float _currentVolume = 0f;
@@ -31,11 +31,9 @@ public class AlarmScript : MonoBehaviour
             _audioSource.Play();
 
         _targetVolume = _maxVolume;
-        Debug.Log("turn on");
     }
     public void TurnOffAlarm()
     {
         _targetVolume = _minVolume;
-        Debug.Log("turn off");
     }
 }
