@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlarmSystem : MonoBehaviour
+[RequireComponent(typeof(AudioSource))]
+public class Alarm : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private float _currentVolume = 0f;
@@ -10,6 +11,19 @@ public class AlarmSystem : MonoBehaviour
     [SerializeField] private float _maxVolume = 1f;
     [SerializeField] private float _minVolume = 0f;
     [SerializeField] private float _targetVolume;
+
+    public void TurnOn()
+    {
+        if (_audioSource.isPlaying == false)
+            _audioSource.Play();
+
+        _targetVolume = _maxVolume;
+    }
+
+    public void TurnOff()
+    {
+        _targetVolume = _minVolume;
+    }
 
     private void Start()
     {
@@ -23,17 +37,5 @@ public class AlarmSystem : MonoBehaviour
 
         if (_audioSource.volume <= 0f && _audioSource.isPlaying == true)
             _audioSource.Stop();
-    }
-
-    public void TurnOnAlarm()
-    {
-        if (_audioSource.isPlaying == false)
-            _audioSource.Play();
-
-        _targetVolume = _maxVolume;
-    }
-    public void TurnOffAlarm()
-    {
-        _targetVolume = _minVolume;
     }
 }

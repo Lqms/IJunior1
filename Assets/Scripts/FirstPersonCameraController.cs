@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Transform))]
-public class MainCameraScript : MonoBehaviour
+public class FirstPersonCameraController : MonoBehaviour
 {
     [SerializeField] private float _mouseSpeed = 250f;
     [SerializeField] private float _interactDistance = 2f;
     [SerializeField] private Transform _playerBody;
+
     private float _rotationY = 0f;
     
     private void Start()
@@ -17,7 +18,7 @@ public class MainCameraScript : MonoBehaviour
 
     private void Update()
     {
-        CheckForInteractableObject();
+        InteractWithScriptedObjects();
 
         if (Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") > 0)
             CameraMove();
@@ -37,22 +38,17 @@ public class MainCameraScript : MonoBehaviour
         transform.localRotation = Quaternion.Euler(_rotationY, 0f, 0f);
     }
 
-    private void CheckForInteractableObject()
+    private void InteractWithScriptedObjects()
     {
         RaycastHit hit;
         Ray ray = gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.transform.GetComponent<InteractableObject>() && hit.distance < _interactDistance)
-            {
-                InteractableObject interactableObject = hit.transform.GetComponent<InteractableObject>();
+            if (hit.transform.TryGetComponent<InteractableObject>(out InteractableObject interactableObject) && hit.distance < _interactDistance)
                 UIManager.Instance.ShowTextHint(interactableObject.InteractMessage);
-            }
             else
-            {
                 UIManager.Instance.ShowTextHint("");
-            }
         }
     }
 }

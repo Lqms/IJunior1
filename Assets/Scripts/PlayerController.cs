@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private CharacterController _controller;
-    private Vector3 _velocity;
-
     [Header("Movement")]
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _sprintSpeedMultiplier = 1;
@@ -19,6 +16,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private bool _isGround;
     [SerializeField] private float _jumpPower = 2;
+
+    private CharacterController _controller;
+    private Vector3 _velocity;
+
 
     void Start()
     {
@@ -63,9 +64,9 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Enter");
 
-        if (other.GetComponent<AlarmSystem>())
+        if (other.GetComponent<Alarm>())
         {
-            other.GetComponent<AlarmSystem>().TurnOnAlarm();
+            other.GetComponent<Alarm>().TurnOn();
         }
     }
 
@@ -73,9 +74,9 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Exit");
 
-        if (other.GetComponent<AlarmSystem>())
+        if (other.GetComponent<Alarm>())
         {
-            other.GetComponent<AlarmSystem>().TurnOffAlarm();
+            other.GetComponent<Alarm>().TurnOff();
         }
     }
 }

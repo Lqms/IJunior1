@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [HideInInspector] public static UIManager Instance;
     [SerializeField] private Text _textHint;
+    [HideInInspector] public static UIManager Instance;
 
     private void Start()
     {

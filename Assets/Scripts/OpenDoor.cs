@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class OpenDoor : MonoBehaviour
 {
-    [SerializeField] private float _openDistance = 2f;
     [SerializeField] private PlayerController _playerController;
     [SerializeField] private bool _isDoorOpen = false;
+
+    private bool _isPlayerInArea = false;
     private Animator _animator;
+    private const string Open = "Open";
+    private const string Close = "Close";
 
     private void Start()
     {
@@ -17,21 +20,34 @@ public class OpenDoor : MonoBehaviour
 
     private void Update()
     {
-        if (Vector3.Distance(gameObject.transform.position, _playerController.transform.position) < _openDistance)
+        if (_isPlayerInArea && Input.GetKeyDown(KeyCode.E))
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (_isDoorOpen == false)
             {
-                if (_isDoorOpen == false)
-                {
-                    _animator.SetTrigger("Open");
-                    _isDoorOpen = true;                   
-                }
-                else
-                {
-                    _animator.SetTrigger("Close");
-                    _isDoorOpen = false;
-                }
+                _animator.SetTrigger(Open);
+                _isDoorOpen = true;
             }
+            else
+            {
+                _animator.SetTrigger(Close);
+                _isDoorOpen = false;
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<PlayerController>(out PlayerController playerController))
+        {
+            _isPlayerInArea = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<PlayerController>(out PlayerController playerController))
+        {
+            _isPlayerInArea = false;
         }
     }
 }
