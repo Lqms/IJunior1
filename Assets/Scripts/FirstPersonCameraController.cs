@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Transform))]
+[RequireComponent(typeof(Camera))]
 public class FirstPersonCameraController : MonoBehaviour
 {
     [SerializeField] private float _mouseSpeed = 250f;
@@ -41,11 +41,11 @@ public class FirstPersonCameraController : MonoBehaviour
     private void InteractWithScriptedObjects()
     {
         RaycastHit hit;
-        Ray ray = gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        Ray ray = GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.transform.TryGetComponent<InteractableObject>(out InteractableObject interactableObject) && hit.distance < _interactDistance)
+            if (hit.transform.TryGetComponent(out InteractableObject interactableObject) && hit.distance < _interactDistance)
                 UIManager.Instance.ShowTextHint(interactableObject.InteractMessage);
             else
                 UIManager.Instance.ShowTextHint("");

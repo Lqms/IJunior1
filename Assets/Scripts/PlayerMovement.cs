@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(CharacterController))]
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float _speed = 5f;
@@ -20,13 +21,12 @@ public class PlayerController : MonoBehaviour
     private CharacterController _controller;
     private Vector3 _velocity;
 
-
-    void Start()
+    private void Start()
     {
         _controller = GetComponent<CharacterController>();
     }
 
-    void Update()
+    private void Update()
     {
         Move();
         Jump();
@@ -46,37 +46,25 @@ public class PlayerController : MonoBehaviour
         _isGround = Physics.CheckSphere(_legs.position, _groundDistance, _groundMask);
 
         if (_isGround && _velocity.y < 0)
-        {
             _velocity.y = _defaultGravity;
-        }
 
         _velocity.y += _gravity * Time.deltaTime;
 
         if (Input.GetButtonDown("Jump") && _isGround)
-        {
             _velocity.y = Mathf.Sqrt(_jumpPower * _defaultGravity * _gravity);
-        }
 
         _controller.Move(_velocity * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
-
-        if (other.GetComponent<Alarm>())
-        {
-            other.GetComponent<Alarm>().TurnOn();
-        }
+        if (other.TryGetComponent(out Alarm component))
+            component.TurnOn();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exit");
-
-        if (other.GetComponent<Alarm>())
-        {
-            other.GetComponent<Alarm>().TurnOff();
-        }
+        if (other.TryGetComponent(out Alarm component))
+            component.TurnOff();
     }
 }

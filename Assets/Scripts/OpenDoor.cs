@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class OpenDoor : MonoBehaviour
 {
-    [SerializeField] private PlayerController _playerController;
+    [SerializeField] private PlayerMovement _playerController;
     [SerializeField] private bool _isDoorOpen = false;
 
-    private bool _isPlayerInArea = false;
     private Animator _animator;
+    private bool _isPlayerInArea = false;
     private const string Open = "Open";
     private const string Close = "Close";
 
     private void Start()
     {
-        _playerController = FindObjectOfType<PlayerController>();
+        _playerController = FindObjectOfType<PlayerMovement>();
         _animator = GetComponent<Animator>();
     }
 
@@ -37,17 +38,13 @@ public class OpenDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<PlayerController>(out PlayerController playerController))
-        {
+        if (other.TryGetComponent(out PlayerMovement playerController))
             _isPlayerInArea = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<PlayerController>(out PlayerController playerController))
-        {
+        if (other.TryGetComponent(out PlayerMovement playerController))
             _isPlayerInArea = false;
-        }
     }
 }
