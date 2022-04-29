@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     private CharacterController _controller;
     private Vector3 _velocity;
+    private float _defaultSpeedMultiplier = 1;
+    private float _maximalSpeedMultiplier = 2;
 
     private void Start()
     {
@@ -37,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         Vector3 move = transform.right * x + transform.forward * z;
-        _sprintSpeedMultiplier = Input.GetKey(KeyCode.LeftShift) ? 2 : 1;
+        _sprintSpeedMultiplier = Input.GetKey(KeyCode.LeftShift) ? _maximalSpeedMultiplier : _defaultSpeedMultiplier;
         _controller.Move(move * _speed * _sprintSpeedMultiplier * Time.deltaTime);
     }
 

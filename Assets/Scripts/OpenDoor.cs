@@ -10,6 +10,7 @@ public class OpenDoor : MonoBehaviour
 
     private Animator _animator;
     private bool _isPlayerInArea = false;
+
     private const string Open = "Open";
     private const string Close = "Close";
 

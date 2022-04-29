@@ -12,19 +12,6 @@ public class Alarm : MonoBehaviour
     [SerializeField] private float _minVolume = 0f;
     [SerializeField] private float _targetVolume;
 
-    public void TurnOn()
-    {
-        if (_audioSource.isPlaying == false)
-            _audioSource.Play();
-
-        _targetVolume = _maxVolume;
-    }
-
-    public void TurnOff()
-    {
-        _targetVolume = _minVolume;
-    }
-
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -37,5 +24,18 @@ public class Alarm : MonoBehaviour
 
         if (_audioSource.volume <= 0f && _audioSource.isPlaying == true)
             _audioSource.Stop();
+    }
+
+    public void TurnOn()
+    {
+        if (_audioSource.isPlaying == false)
+            _audioSource.Play();
+
+        _targetVolume = _maxVolume;
+    }
+
+    public void TurnOff()
+    {
+        _targetVolume = _minVolume;
     }
 }

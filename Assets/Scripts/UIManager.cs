@@ -6,11 +6,19 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Text _textHint;
-    [HideInInspector] public static UIManager Instance;
 
-    private void Start()
+    private static UIManager _instance;
+
+    public static UIManager Instance => _instance;
+
+    private void OnEnable()
     {
-        Instance = this;
+        _instance = this;
+    }
+
+    private void OnDisable()
+    {
+        _instance = null;
     }
 
     private void Update()
